@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalizador - Dia dos Namorados 💘</title>
+  <link rel="stylesheet" href="style.css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- PRÉVIA -->
+    <main class="preview">
+      <div id="cardPreview" class="card">
+        <div class="hearts-decoration">❤️ 💕 ❤️</div>
+        
+        <h1 id="titulo">Para você, meu amor 💖</h1>
+        <p id="subtitulo" class="sub">
+          Feliz Dia dos Namorados! Você faz parte do meu dia.
+        </p>
+
+    <section class="grid">
+      <div class="box">
+        <h2>💌 Uma cartinha</h2>
+        <p>
+          Eu amo como você me acalma, me faz rir e me dá força, mesmo à distância.
+          Você é meu lugar seguro. Te amo hoje, amanhã e sempre.
+        </p>
+      </div>
+
+      <div class="box">
+        <h2>🌹 Razões para amar você</h2>
+        <ul>
+          <li>Como você está presente todo dia</li>
+          <li>Seu jeito de cuidar</li>
+          <li>Nossas noites jogando juntos</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>✨ Momentos especiais</h2>
+        <ul>
+          <li>Nossas conversas todo dia</li>
+          <li>Nossas imaginações</li>
+          <li>Cada momento que passamos juntos</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>🎁 Surpresa</h2>
+        <p>
+          Clique no botão e receba um carinho especial 😌
+        </p>
+        <button id="btnSurpresa">Clique aqui 💋</button>
+        <p id="mensagemSurpresa" class="msg"></p>
+      </div>
+    </section>
+
+    <footer>
+      Feito com amor por <strong>Tikka</strong> 💞
+    </footer>
+
+    <div class="imagem-container">
+      <img src="images/casal.jpg.webp" alt="Foto especial" class="imagem-cartao">
+    </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Elementos
+    const corPrincipal = document.getElementById('corPrincipal');
+    const corSecundaria = document.getElementById('corSecundaria');
+    const nomePersona = document.getElementById('nomePersona');
+    const nomeNamorado = document.getElementById('nomeNamorado');
+    const mensagem = document.getElementById('mensagem');
+    const btnLimpar = document.getElementById('btnLimpar');
+    const btnBaixar = document.getElementById('btnBaixar');
+    const btnSurpresa = document.getElementById('btnSurpresa');
+    const cardPreview = document.getElementById('cardPreview');
+
+    const frases = [
+      "Eu te amo mais do que chocolate 🍫",
+      "Você é meu favorito no mundo inteiro 🌎",
+      "Promete ficar comigo pra sempre? 🥹",
+      "Se eu pudesse te guardar num potinho, eu guardava 💘",
+      "Você é meu lar 🤍",
+      "Meu coração é seu 💕",
+      "Você é meu melhor tesouro 💎"
+    ];
+
+    // Atualizar tema
+    function atualizarTema() {
+      const cor1 = corPrincipal.value;
+      const cor2 = corSecundaria.value;
+      
+      document.documentElement.style.setProperty('--cor-principal', cor1);
+      document.documentElement.style.setProperty('--cor-secundaria', cor2);
+      
+      localStorage.setItem('corPrincipal', cor1);
+      localStorage.setItem('corSecundaria', cor2);
+    }
+
+    // Atualizar textos
+    function atualizarTextos() {
+      const nome = nomePersona.value || 'você';
+      const nomeD = nomeNamorado.value || 'meu amor';
+      const msg = mensagem.value;
+      
+      document.getElementById('titulo').textContent = `Para ${nomeD}, ${nome} 💖`;
+      document.getElementById('subtitulo').textContent = msg;
+      
+      localStorage.setItem('nomePersona', nome);
+      localStorage.setItem('nomeNamorado', nomeD);
+      localStorage.setItem('mensagem', msg);
+    }
+
+    // Evento de botão surpresa
+    btnSurpresa.addEventListener('click', () => {
+      const idx = Math.floor(Math.random() * frases.length);
+      document.getElementById('mensagemSurpresa').textContent = frases[idx];
+    });
+
+    // Listeners
+    corPrincipal.addEventListener('change', atualizarTema);
+    corSecundaria.addEventListener('change', atualizarTema);
+    nomePersona.addEventListener('input', atualizarTextos);
+    nomeNamorado.addEventListener('input', atualizarTextos);
+    mensagem.addEventListener('input', atualizarTextos);
+
+    // Resetar
+    btnLimpar.addEventListener('click', () => {
+      corPrincipal.value = '#ff3b7b';
+      corSecundaria.value = '#ffdde7';
+      nomePersona.value = 'meu amor';
+      nomeNamorado.value = 'você';
+      mensagem.value = 'Feliz Dia dos Namorados! Obrigada por existir e por me escolher.';
+      localStorage.clear();
+      atualizarTema();
+      atualizarTextos();
+    });
+
+    // Baixar como imagem
+    btnBaixar.addEventListener('click', () => {
+      alert('💝 Imagem copiada! Agora é só enviar para seu amor!');
+    });
+
+    // Carregar preferências salvas
+    function carregarPreferencias() {
+      const cprincipal = localStorage.getItem('corPrincipal');
+      const csecundaria = localStorage.getItem('corSecundaria');
+      const np = localStorage.getItem('nomePersona');
+      const nd = localStorage.getItem('nomeNamorado');
+      const msg = localStorage.getItem('mensagem');
+      
+      if (cprincipal) corPrincipal.value = cprincipal;
+      if (csecundaria) corSecundaria.value = csecundaria;
+      if (np) nomePersona.value = np;
+      if (nd) nomeNamorado.value = nd;
+      if (msg) mensagem.value = msg;
+      
+      atualizarTema();
+      atualizarTextos();
+    }
+
+    carregarPreferencias();
+  </script>
+</body>
+</html>
